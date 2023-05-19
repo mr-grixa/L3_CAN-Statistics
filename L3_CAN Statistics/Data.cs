@@ -4,6 +4,9 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Net.Sockets;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace L3_CAN_Statistics
 {
@@ -23,6 +26,7 @@ namespace L3_CAN_Statistics
         public byte b6;
         public byte b7;
         public byte b8;
+
 
         public CANDumpData(uint tickStamp, byte prefix, byte format, byte dest, byte source, byte dLC, byte b1, byte b2, byte b3, byte b4, byte b5, byte b6, byte b7, byte b8)
         {
@@ -83,6 +87,9 @@ namespace L3_CAN_Statistics
             }
             return table;
         }
+
+
+
 
     }
     internal static class Draw
