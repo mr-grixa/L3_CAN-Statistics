@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -63,6 +63,9 @@
             this.label11 = new System.Windows.Forms.Label();
             this.TextBoxSource = new System.Windows.Forms.TextBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
+            this.comboBox_node = new System.Windows.Forms.ComboBox();
+            this.label_in = new System.Windows.Forms.Label();
+            this.label_out = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_delta)).BeginInit();
@@ -211,16 +214,16 @@
             // 
             // chart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart.Legends.Add(legend3);
             this.chart.Location = new System.Drawing.Point(696, 238);
             this.chart.Name = "chart";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chart.Series.Add(series3);
             this.chart.Size = new System.Drawing.Size(759, 333);
             this.chart.TabIndex = 149;
             this.chart.Text = "chart";
@@ -401,11 +404,44 @@
             this.listBox2.Size = new System.Drawing.Size(320, 212);
             this.listBox2.TabIndex = 167;
             // 
+            // comboBox_node
+            // 
+            this.comboBox_node.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_node.FormattingEnabled = true;
+            this.comboBox_node.Location = new System.Drawing.Point(559, 77);
+            this.comboBox_node.Name = "comboBox_node";
+            this.comboBox_node.Size = new System.Drawing.Size(95, 21);
+            this.comboBox_node.TabIndex = 168;
+            this.comboBox_node.SelectedValueChanged += new System.EventHandler(this.comboBox_node_SelectedValueChanged);
+            // 
+            // label_in
+            // 
+            this.label_in.AutoSize = true;
+            this.label_in.Location = new System.Drawing.Point(556, 106);
+            this.label_in.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_in.Name = "label_in";
+            this.label_in.Size = new System.Drawing.Size(19, 13);
+            this.label_in.TabIndex = 169;
+            this.label_in.Text = "In:";
+            // 
+            // label_out
+            // 
+            this.label_out.AutoSize = true;
+            this.label_out.Location = new System.Drawing.Point(609, 106);
+            this.label_out.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_out.Name = "label_out";
+            this.label_out.Size = new System.Drawing.Size(27, 13);
+            this.label_out.TabIndex = 170;
+            this.label_out.Text = "Out:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1460, 577);
+            this.Controls.Add(this.label_out);
+            this.Controls.Add(this.label_in);
+            this.Controls.Add(this.comboBox_node);
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.TextBoxValue);
@@ -485,6 +521,9 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox TextBoxSource;
         private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ComboBox comboBox_node;
+        private System.Windows.Forms.Label label_in;
+        private System.Windows.Forms.Label label_out;
     }
 }
 

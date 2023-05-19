@@ -15,6 +15,9 @@ namespace L3_CAN_Statistics
         DataTable dataTable;
         DataTable CANdataTable;
         List<CANDumpData> frames;
+
+        Dictionary<byte, int> incomingMessagesCount;
+        Dictionary<byte, int> outgoingMessagesCount;
         public Form1()
         {
             InitializeComponent();
@@ -179,14 +182,13 @@ namespace L3_CAN_Statistics
         private void DrawChart()
         {
             chart.Series.Clear();
-            chart.ChartAreas[0].AxisY.IsInterlaced = true;
             for (int i = 1; i < dataTable.Columns.Count; i++)
             {
                 DataColumn column = dataTable.Columns[i];
                 string columnName = column.ColumnName;
                 Series series = new Series(columnName);
                 series = chart.Series.Add(columnName);
-                series.ChartType = SeriesChartType.Spline;
+                series.ChartType = SeriesChartType.Line;
                 series.BorderWidth = 3;
                 series.Points.DataBind(dataTable.AsEnumerable(), "TickStamp", columnName, "");
             }
@@ -213,23 +215,49 @@ namespace L3_CAN_Statistics
                 int delta = (int)numericUpDown_delta.Value;
                 if (start + delta < frames.Count)
                 {
-                    numericUpDown_start.Value = start + delta;
-                    List<CANDumpData> data = frames.Skip(start).Take(delta).ToList();
-                    pictureBox1.Image = Draw.Сonnection(data);
-                    CANtodataGrid(data);
+                    Work(start, delta);
                 }
                 else
                 {
                     delta = frames.Count - start;
                     if (delta > 0)
                     {
-                        numericUpDown_start.Value = start + delta;
-                        List<CANDumpData> data = frames.Skip(start).Take(delta).ToList();
-                        pictureBox1.Image = Draw.Сonnection(data);
-                        CANtodataGrid(data);
+                        Work(start, delta);
                     }
                 }
 
+            }
+            void Work(int start, int delta)
+            {
+                numericUpDown_start.Value = start + delta;
+                List<CANDumpData> dataList = frames.Skip(start).Take(delta).ToList();
+                pictureBox1.Image = Draw.Сonnection(dataList);
+                CANtodataGrid(dataList);
+
+                comboBox_node.Items.Clear();
+                listBox2.Items.Clear();
+                var uniqueValues = dataList.SelectMany(data => new[] { data.Source, data.Dest }).Distinct();
+                byte[] source = uniqueValues.ToArray();
+
+                // Создаем словарь для подсчета входящих и исходящих сообщений на каждом узле
+                incomingMessagesCount = new Dictionary<byte, int>();
+                outgoingMessagesCount = new Dictionary<byte, int>();
+
+                // Инициализируем счетчики для каждого узла
+                foreach (byte value in source)
+                {
+                    incomingMessagesCount[value] = 0;
+                    outgoingMessagesCount[value] = 0;
+                    comboBox_node.Items.Add(value);
+
+                }
+                foreach (var data in dataList)
+                {
+                    outgoingMessagesCount[data.Source]++;
+                    incomingMessagesCount[data.Dest]++;
+                }
+
+                
             }
         }
 
@@ -529,6 +557,16 @@ namespace L3_CAN_Statistics
                 MessageBox.Show("Введите число.");
                 e.Cancel = true;
             }
+        }
+
+        private void comboBox_node_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (incomingMessagesCount!=null && outgoingMessagesCount != null)
+            {
+                label_in.Text = "In: "   +incomingMessagesCount[byte.Parse(comboBox_node.SelectedItem.ToString())];
+                label_out.Text = "Out: " + outgoingMessagesCount[byte.Parse(comboBox_node.SelectedItem.ToString())];
+            }
+
         }
     }
 }
